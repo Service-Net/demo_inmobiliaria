@@ -1,56 +1,80 @@
-  .galeria {
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        gap: 15px;
-    }
+ /* ================================
+   RESET
+================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    .casa {
-        width: 100%;
-    }
-
-    .casa img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-
-
-
-        /*CATALOGO DE PROPIEDADES*/
-
+/* ================================
+   BASE — BODY
+================================ */
 body {
     background-color: #f4f6f9;
     color: #333;
     font-family: 'Georgia', serif;
+    /* Empuja el footer abajo si hay poco contenido */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+/* ================================
+   HEADER
+================================ */
 header {
     background-color: #a69117;
-    color: white;
+    color: #fff;
     text-align: center;
-    padding: 25px 0;
+    padding: 22px 80px;   /* espacio horizontal para el botón "volver" */
+    position: relative;
+    flex-shrink: 0;
 }
 
 header h1 {
-    font-size: 28px;
-    letter-spacing: 1px;
+    font-size: clamp(14px, 3.5vw, 24px);
+    letter-spacing: 0.8px;
+    line-height: 1.3;
 }
 
+.back-link {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.88rem;
+    opacity: 0.88;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+/* ================================
+   GALERÍA — ocupa el espacio disponible
+================================ */
 .galeria {
+    flex: 1;                 /* crece para empujar el footer abajo */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
-    padding: 40px;
+    padding: 36px 40px;
+    
 }
 
 .casa {
-    background-color: white;
+    background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    transition: transform 0.25s ease;
 }
 
 .casa:hover {
@@ -59,94 +83,127 @@ header h1 {
 
 .casa img {
     width: 100%;
-    height: 220px;
+    height: 210px;
+    box-shadow: #a69117 0px 4px 12px;
+
     object-fit: cover;
+    display: block;
 }
 
+/* ================================
+   WHATSAPP — fixed, siempre visible
+================================ */
+.logo-wsp {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    width: 58px;
+    height: 58px;
+    z-index: 9999;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.logo-wsp img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 7px rgba(0,0,0,0.40));
+}
+
+.logo-wsp:hover {
+    transform: scale(1.12);
+}
+
+/* ================================
+   FOOTER
+   padding-bottom = altura WSP + margen
+   para que nunca quede tapado
+================================ */
 footer {
-    text-decoration: none;
+    flex-shrink: 0;
     text-align: center;
-    padding: 20px;
-    background-color: #a69117;;
-    color: white;
+    /* 22px bottom del WSP + 58px alto + 20px margen extra = 100px */
+    padding: 22px 16px 100px;
+    background-color: #a69117;
+    color: #fff;
     margin-top: 30px;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 footer p {
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: 6px;
+    font-size: 13px;
 }
 
-footer a {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 25px;
-    background-color: #c0a060;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-
-
-/* ========================= */
-/*      RESPONSIVE 768px     */
-/* ========================= */
-
-/* ========================= */
-/*        RESPONSIVE         */
-/* ========================= */
-
-
-
-/* Móviles grandes */
-/* ========================= */
-/*      RESPONSIVE 768px     */
-/* ========================= */
-
+/* ================================
+   RESPONSIVE — TABLET (≤ 768px)
+================================ */
 @media (max-width: 768px) {
-
     .galeria {
-        display: flex;
-        flex-direction: column;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
         padding: 20px;
-        gap: 15px;
-    }
-
-    .casa {
-        width: 100%;
-        flex-direction: column;
     }
 
     .casa img {
-        width: 100%;
-        height: auto;
-        display: block;
-        flex-direction: column;
+        height: 190px;
+    }
+}
+
+/* ================================
+   RESPONSIVE — MÓVIL (≤ 500px)
+   Una sola columna, imágenes fluidas
+================================ */
+@media (max-width: 500px) {
+    header {
+        padding: 18px 70px;  /* sigue habiendo hueco para "← Volver" */
     }
 
-}
-/* Móviles pequeños */
-@media (max-width: 480px) {
     header h1 {
-        font-size: 18px;
+        font-size: 13px;
+    }
+
+    .back-link {
+        font-size: 0.8rem;
     }
 
     .galeria {
         grid-template-columns: 1fr;
-        padding: 15px;
+        gap: 12px;
+        padding: 14px;
     }
 
+    /* Altura proporcional: no se cortan ni distorsionan */
     .casa img {
-        max-width: 160px;
-        height: 160px;
-        
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+    }
+
+    .logo-wsp {
+        width: 50px;
+        height: 50px;
+        bottom: 14px;
+        right: 14px;
     }
 
     footer {
-        font-size: 14px;
-        padding: 15px;
+        font-size: 12px;
+        padding: 18px 14px 50px;
+    }
+}
+
+/* ================================
+   RESPONSIVE — MÓVIL PEQUEÑO (≤ 360px)
+================================ */
+@media (max-width: 360px) {
+    header h1 {
+        font-size: 12px;
+    }
+
+    .back-link {
+        font-size: 0.75rem;
     }
 }
